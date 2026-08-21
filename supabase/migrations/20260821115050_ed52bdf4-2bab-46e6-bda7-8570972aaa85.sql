@@ -1,0 +1,1 @@
+DELETE FROM public.thoughts WHERE message = 'Hello from a smoke test!';
