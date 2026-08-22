@@ -48,11 +48,16 @@ export const photos: Photo[] = [
     shape: "tall",
   },
   { id: "04", title: "Late-night desk", caption: "Where most of this was built.", shape: "wide" },
-
-  { id: "03", title: "Mountain detour", caption: "Wrong turn, better view.", shape: "square" },
-  { id: "04", title: "Street food run", caption: "Nine rupees of pure joy.", shape: "square" },
-  { id: "05", title: "Rain on glass", caption: "Monsoon, from the dry side.", shape: "tall" },
-  { id: "06", title: "Friends, blurry", caption: "Nobody stood still. Perfect.", shape: "wide" },
-  { id: "07", title: "Neon alley", caption: "Colours I keep trying to recreate in CSS.", shape: "square" },
-  { id: "08", title: "Morning chai", caption: "The actual project dependency.", shape: "square" },
+  { id: "05", title: "Mountain detour", caption: "Wrong turn, better view.", shape: "square" },
+  { id: "06", title: "Street food run", caption: "Nine rupees of pure joy.", shape: "square" },
+  { id: "07", title: "Rain on glass", caption: "Monsoon, from the dry side.", shape: "tall" },
+  { id: "08", title: "Friends, blurry", caption: "Nobody stood still. Perfect.", shape: "wide" },
+  {
+    id: "09",
+    title: "Neon alley",
+    caption: "Colours I keep trying to recreate in CSS.",
+    shape: "square",
+  },
+  { id: "10", title: "Morning chai", caption: "The actual project dependency.", shape: "square" },
 ];
+
