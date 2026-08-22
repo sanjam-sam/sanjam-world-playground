@@ -1,6 +1,6 @@
-import cafePortrait from "@/assets/IMG_4203.jpeg.asset.json";
-import indoorPortrait from "@/assets/FullSizeRender.jpeg.asset.json";
-import lakeBoat from "@/assets/IMG_2480.jpeg.asset.json";
+import cafePortrait from "@/assets/IMG_4203.jpg";
+import indoorPortrait from "@/assets/FullSizeRender.jpg";
+import lakeBoat from "@/assets/IMG_2480.jpg";
 
 /**
  * Photo gallery slots.
