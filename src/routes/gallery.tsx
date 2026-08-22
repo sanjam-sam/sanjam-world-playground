@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ImagePlus, Camera } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { photos, type Photo } from "@/data/gallery";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
