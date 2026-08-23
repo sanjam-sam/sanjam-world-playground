@@ -1,6 +1,12 @@
 import cafePortrait from "@/assets/IMG_4203.jpg";
 import indoorPortrait from "@/assets/FullSizeRender.jpg";
 import lakeBoat from "@/assets/IMG_2480.jpg";
+import sunsetPark from "@/assets/sunset-park.jpg";
+import corbettJeep from "@/assets/corbett-jeep.jpg";
+import hillRide from "@/assets/hill-ride.jpg";
+import teakWall from "@/assets/teak-wall.jpg";
+import cliffView from "@/assets/cliff-view.jpg";
+import pineRidge from "@/assets/pine-ridge.jpg";
 
 /**
  * Photo gallery slots.
