@@ -145,20 +145,29 @@ export const makeMove = createServerFn({ method: "POST" })
 
     const win = winnerOf(board);
     const full = board.every(Boolean);
-    const patch: Record<string, unknown> = {
+    const patch: {
+      board: Cell[];
+      turn: string;
+      updated_at: string;
+      status?: string;
+      winner?: string | null;
+      score_x?: number;
+      score_o?: number;
+      draws?: number;
+    } = {
       board,
       turn: seat === "X" ? "O" : "X",
       updated_at: new Date().toISOString(),
     };
     if (win) {
-      patch['status'] = "finished";
-      patch['winner'] = win.mark;
-      patch[win.mark === "X" ? "score_x" : "score_o"] =
-        (win.mark === "X" ? room.score_x : room.score_o) + 1;
+      patch.status = "finished";
+      patch.winner = win.mark;
+      if (win.mark === "X") patch.score_x = room.score_x + 1;
+      else patch.score_o = room.score_o + 1;
     } else if (full) {
-      patch['status'] = "finished";
-      patch['winner'] = "draw";
-      patch['draws'] = room.draws + 1;
+      patch.status = "finished";
+      patch.winner = "draw";
+      patch.draws = room.draws + 1;
     }
 
     const { data: updated, error } = await supabaseAdmin
