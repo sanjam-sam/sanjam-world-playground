@@ -67,7 +67,7 @@ export const photos: Photo[] = [
     caption: "Open-top Gypsy, tall sal trees, and a whole reserve ahead.",
     src: corbettJeep,
     alt: "Sanjam leaning against a green open-top safari jeep parked under tall green trees.",
-    shape: "wide",
+    shape: "square",
   },
   {
     id: "06",
@@ -75,7 +75,7 @@ export const photos: Photo[] = [
     caption: "Cut rock on one side, cold air on the other.",
     src: hillRide,
     alt: "Sanjam sitting on a black Royal Enfield motorcycle beside a rocky mountain roadside.",
-    shape: "wide",
+    shape: "tall",
   },
   {
     id: "07",
