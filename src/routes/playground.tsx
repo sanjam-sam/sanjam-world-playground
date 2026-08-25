@@ -5,7 +5,6 @@ import { GuessTheNumber } from "@/components/games/GuessTheNumber";
 import { TicTacToe } from "@/components/games/TicTacToe";
 import { MemoryMatch } from "@/components/games/MemoryMatch";
 import { RockPaperScissors } from "@/components/games/RockPaperScissors";
-import { OnlineTicTacToe } from "@/components/games/OnlineTicTacToe";
 
 export const Route = createFileRoute("/playground")({
   head: () => ({
@@ -14,12 +13,12 @@ export const Route = createFileRoute("/playground")({
       {
         name: "description",
         content:
-          "Play Guess the Number, Tic-Tac-Toe, Memory Match and Rock Paper Scissors in the browser, plus online two-player Tic-Tac-Toe with room codes.",
+          "Play Guess the Number, Tic-Tac-Toe, Memory Match and Rock Paper Scissors instantly in your browser.",
       },
       { property: "og:title", content: "Playground — Games in Sanjam World" },
       {
         property: "og:description",
-        content: "Four instant browser games plus live two-player Tic-Tac-Toe rooms.",
+        content: "Four instant browser games — no accounts, no downloads.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -33,17 +32,12 @@ function PlaygroundPage() {
     <>
       <PageHeader eyebrow="Playground" title="Small games, instant play">
         <p>
-          No accounts, no downloads. Play solo, pass a phone around, or open a room and take on a
-          friend from anywhere.
+          No accounts, no downloads. Play solo, or pass a phone around and take turns.
         </p>
       </PageHeader>
 
       <section className="mx-auto max-w-6xl px-5 pb-8">
-        <Reveal className="block">
-          <OnlineTicTacToe />
-        </Reveal>
-
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <div className="grid gap-5 lg:grid-cols-2">
           <Reveal>
             <GuessTheNumber />
           </Reveal>
