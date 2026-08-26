@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import {
   Eye,
@@ -20,12 +19,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  deleteThought,
-  listAllThoughts,
-  setThoughtVisibility,
-  type AdminThought,
-} from "@/lib/thoughts.functions";
 
 export const Route = createFileRoute("/thoughts")({
   head: () => ({
@@ -57,6 +50,12 @@ type Thought = {
   message: string;
   created_at: string;
 };
+
+type AdminThought = Thought & { is_visible: boolean };
+
+// This is only an immediate UI check. The database repeats the authorization
+// check before returning hidden thoughts or applying moderation actions.
+const ADMIN_ACCESS_CODE = "5790";
 
 function timeAgo(iso: string) {
   const diff = Date.now() - new Date(iso).getTime();
@@ -268,10 +267,6 @@ function ThoughtsPage() {
 }
 
 function ModerationPanel({ onChanged }: { onChanged: () => void }) {
-  const list = useServerFn(listAllThoughts);
-  const setVisible = useServerFn(setThoughtVisibility);
-  const remove = useServerFn(deleteThought);
-
   const [open, setOpen] = useState(false);
   const [codeInput, setCodeInput] = useState("");
   const [code, setCode] = useState<string | null>(null);
@@ -282,15 +277,27 @@ function ModerationPanel({ onChanged }: { onChanged: () => void }) {
 
   const refresh = async (withCode: string) => {
     const normalizedCode = withCode.trim();
+    if (normalizedCode !== ADMIN_ACCESS_CODE) {
+      setCode(null);
+      setItems([]);
+      setGateError("That code doesn't match.");
+      return;
+    }
+
     setLoading(true);
     try {
-      setItems(await list({ data: { code: normalizedCode } }));
+      const { data, error: moderationError } = await supabase.rpc(
+        "list_thoughts_for_moderation",
+        { access_code: normalizedCode },
+      );
+      if (moderationError) throw moderationError;
+      setItems(data ?? []);
       setCode(normalizedCode);
       setGateError(null);
     } catch {
       setCode(null);
       setItems([]);
-      setGateError("That code doesn't match.");
+      setGateError("Moderation couldn't connect. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -305,11 +312,16 @@ function ModerationPanel({ onChanged }: { onChanged: () => void }) {
     if (!code) return;
     setBusyId(id);
     try {
+      const { error: moderationError } = await supabase.rpc("moderate_thought", {
+        access_code: code,
+        thought_id: id,
+        moderation_action: action,
+      });
+      if (moderationError) throw moderationError;
+
       if (action === "delete") {
-        await remove({ data: { code, id } });
         toast.success("Thought deleted permanently.");
       } else {
-        await setVisible({ data: { code, id, visible: action === "show" } });
         toast.success(action === "show" ? "Shown on profile." : "Removed from profile.");
       }
       await refresh(code);
