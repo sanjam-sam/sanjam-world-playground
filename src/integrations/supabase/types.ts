@@ -43,7 +43,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      list_thoughts_for_moderation: {
+        Args: { access_code: string }
+        Returns: {
+          author_name: string
+          created_at: string
+          id: string
+          is_visible: boolean
+          message: string
+        }[]
+      }
+      moderate_thought: {
+        Args: {
+          access_code: string
+          moderation_action: string
+          thought_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
