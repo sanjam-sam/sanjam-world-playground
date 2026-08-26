@@ -281,10 +281,11 @@ function ModerationPanel({ onChanged }: { onChanged: () => void }) {
   const [gateError, setGateError] = useState<string | null>(null);
 
   const refresh = async (withCode: string) => {
+    const normalizedCode = withCode.trim();
     setLoading(true);
     try {
-      setItems(await list({ data: { code: withCode } }));
-      setCode(withCode);
+      setItems(await list({ data: { code: normalizedCode } }));
+      setCode(normalizedCode);
       setGateError(null);
     } catch {
       setCode(null);
@@ -348,9 +349,11 @@ function ModerationPanel({ onChanged }: { onChanged: () => void }) {
               <Input
                 id="mod-code"
                 type="password"
+                inputMode="numeric"
                 value={codeInput}
-                onChange={(e) => setCodeInput(e.target.value)}
+                onChange={(e) => setCodeInput(e.target.value.replace(/\s/g, ""))}
                 autoComplete="off"
+                maxLength={32}
                 placeholder="••••"
                 className="mt-1.5 bg-background/60 tracking-[0.3em]"
               />
